@@ -10,9 +10,7 @@ import { toast } from "sonner";
 export const RequestTable = () => {
     const [prestacaoServico, setPrestacaoServico] = useState<any[]>([]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+   
 
     const fetchData = async () => {
         try {
@@ -49,7 +47,9 @@ export const RequestTable = () => {
             );
         }
     };
-
+        useEffect(() => {
+                fetchData();
+            }, []);
     return (
         <div>
             <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4">
