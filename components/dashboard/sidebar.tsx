@@ -17,7 +17,7 @@ export default function Sidebar() {
 
         <div className="ml-3">
           <h3 className="text-sm font-bold text-gray-800 leading-none">
-            Bob's Handyman
+            Bob&apos;s Handyman
           </h3>
           <p className="text-[10px] font-semibold text-gray-400 mt-1 uppercase tracking-wider">
             Service Provider
