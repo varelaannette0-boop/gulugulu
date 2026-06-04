@@ -186,7 +186,7 @@ function ProposalCard({
     );
 }
 
-export function BudgetPage() {
+export default function BudgetPage() {
     const [proposals, setProposals] = useState(initialProposals);
     const [selectedProposalId, setSelectedProposalId] = useState(initialProposals[0].id);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -400,4 +400,3 @@ export function BudgetPage() {
     );
 }
 
-export default BudgetPage;
