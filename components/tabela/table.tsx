@@ -55,8 +55,12 @@ export const RequestTable = () => {
      USE EFFECT
   ======================= */
   useEffect(() => {
-    fetchData();
-  }, []);
+  const run = async () => {
+    await fetchData();
+  };
+
+  run();
+}, []);
 
   /* =======================
      UI
