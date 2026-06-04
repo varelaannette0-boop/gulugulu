@@ -1,67 +1,67 @@
-"use client"
+"use client";
 
 import { Proposal_Board } from "@/components/components_project/proposal_board";
-import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
+import { gql } from "@apollo/client";
+
+interface PropostaRequest {
+  id: string;
+  owner: string;
+  estado: string;
+  id_prestacao_servico: {
+    id_servico: {
+      nome: string;
+      categoria: {
+        id: string;
+        icone: string;
+      };
+    };
+  };
+}
+
+interface GetAllPropostaResponse {
+  getAllProposta: PropostaRequest[];
+}
+
+const GET_ALL_PROPOSTA = gql`
+  query GetAllProposta {
+    getAllProposta {
+      id
+      owner
+      estado
+      id_prestacao_servico {
+        id_servico {
+          nome
+          categoria {
+            id
+            icone
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function ProposalPage() {
-    interface PropostaRequest{
-        id: string,
-        owner: string,
-        estado: string,
-        id_prestacao_servico:{
-            id_servico:{
-                nome: string,
-                categoria:{
-                    id: string
-                    icone: string
-                }
-            }
-        }
-    }
+  const { data, loading, error } =
+    useQuery<GetAllPropostaResponse>(GET_ALL_PROPOSTA);
 
-    const dataQuery = gql`
-        query GetAllProposta {
-            getAllProposta {
-                id
-                owner
-                estado
-                id_prestacao_servico{
-                    id_servico{
-                        nome
-                        categoria{
-                            id
-                            icone
-                        }
-                    }
-                }
-            }
-        }`
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
+  const propostas = data?.getAllProposta ?? [];
 
-    function getAllProposta(): any {    
-        const { data, loading, error } = useQuery<PropostaRequest>(dataQuery);
-        return {loading, error, data };
-    };
-
-
-
-    const { loading, error, data } = getAllProposta();
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
-    const propostas = data?.getAllProposta || []; 
-
-    return (
+  return (
     <div>
       <h1>Home</h1>
-      {propostas.map((propostaRequest: PropostaRequest) => (
+
+      {propostas.map((propostaRequest) => (
         <Proposal_Board
-        key={propostaRequest.id}
-        id={propostaRequest.id}
-        estado={propostaRequest.estado}
-        owner={propostaRequest.owner}
-        id_prestacao_servico={propostaRequest.id_prestacao_servico}
+          key={propostaRequest.id}
+          id={propostaRequest.id}
+          estado={propostaRequest.estado}
+          owner={propostaRequest.owner}
+          id_prestacao_servico={propostaRequest.id_prestacao_servico}
         />
       ))}
     </div>
